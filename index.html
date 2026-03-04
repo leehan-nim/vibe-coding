@@ -1,131 +1,140 @@
-좌측 파일 트리에서 파일을 선택하세요.<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>푸른바다 펜션 | 공식 홈페이지</title>
+    <title>별빛 스테이 | 서버 없이 바로 확인</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* 기본 스타일 초기화 */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #d4a373;
+            --bg-light: #fefae0;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; line-height: 1.6; color: #333; }
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #fff; color: #333; }
 
-        /* 헤더 & 네비게이션 */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: #fff;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        /* 네비게이션 */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 10%; background: #fff; border-bottom: 1px solid #eee;
         }
-        .logo { font-size: 1.5rem; font-weight: bold; color: #007bff; }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a:hover { color: #007bff; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
+        .nav-menu a { margin-left: 20px; text-decoration: none; color: #666; font-size: 0.9rem; }
 
-        /* 메인 비주얼 (Hero Section) */
+        /* 히어로 섹션 */
         .hero {
-            height: 60vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                        url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            text-align: center;
+            position: relative; height: 500px;
+            background: url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1200&q=80') center/cover;
+            display: flex; align-items: center; justify-content: center; color: white; text-align: center;
         }
-        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
-        .hero p { font-size: 1.2rem; }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+        }
+        .hero-content { z-index: 1; }
+        .hero h1 { font-size: 3rem; margin-bottom: 15px; }
 
-        /* 섹션 공통 */
-        section { padding: 60px 5%; text-align: center; }
-        h2 { margin-bottom: 40px; font-size: 2rem; color: #444; }
+        /* 예약 폼 (서버 없이 동작하는 JS 포함) */
+        .booking-box {
+            max-width: 900px; margin: -50px auto 50px; background: white;
+            padding: 30px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative; z-index: 2; display: flex; gap: 15px; flex-wrap: wrap;
+        }
+        .input-group { flex: 1; min-width: 150px; }
+        .input-group label { display: block; font-size: 0.8rem; color: #888; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        
+        .btn-reserve {
+            background: var(--accent-color); color: white; border: none;
+            padding: 0 30px; border-radius: 5px; cursor: pointer; font-weight: bold;
+            transition: 0.3s; height: 45px; margin-top: 20px;
+        }
+        .btn-reserve:hover { background: #bc8a5f; }
 
-        /* 객실 소개 그리드 */
-        .room-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .room-card {
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-        .room-card:hover { transform: translateY(-10px); }
-        .room-card img { width: 100%; height: 200px; object-fit: cover; }
-        .room-info { padding: 20px; }
-        .room-info h3 { margin-bottom: 10px; }
-        .price { color: #e67e22; font-weight: bold; }
+        /* 하단 정보 */
+        .info-section { padding: 80px 10%; text-align: center; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .info-item img { width: 100%; border-radius: 8px; margin-bottom: 15px; }
 
-        /* 푸터 */
-        footer {
-            background: #333;
-            color: #fff;
-            padding: 40px 5%;
-            font-size: 0.9rem;
-        }
+        footer { background: #f8f9fa; padding: 40px 10%; text-align: center; color: #888; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">푸른바다 펜션</div>
-        <ul class="nav-links">
-            <li><a href="#about">소개</a></li>
-            <li><a href="#rooms">객실</a></li>
-            <li><a href="#reserve">예약안내</a></li>
-        </ul>
-    </header>
+    <nav>
+        <div class="logo">STARLIGHT STAY</div>
+        <div class="nav-menu">
+            <a href="#">객실보기</a>
+            <a href="#">부대시설</a>
+            <a href="#">예약확인</a>
+        </div>
+    </nav>
 
     <div class="hero">
-        <h1>자연 속의 온전한 휴식</h1>
-        <p>파도 소리와 함께하는 특별한 하루를 선물합니다.</p>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>당신만의 프라이빗한 휴식</h1>
+            <p>복잡한 도심을 떠나 별빛 아래에서 쉬어가세요.</p>
+        </div>
     </div>
 
-    <section id="rooms">
-        <h2>Our Rooms</h2>
-        <div class="room-container">
-            <div class="room-card">
-                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=60" alt="객실 1">
-                <div class="room-info">
-                    <h3>오션뷰 스위트</h3>
-                    <p>전 객실 바다 조망, 커플 전용</p>
-                    <p class="price">₩150,000 ~</p>
-                </div>
+    <div class="booking-box">
+        <div class="input-group">
+            <label>체크인</label>
+            <input type="date" id="checkin">
+        </div>
+        <div class="input-group">
+            <label>체크아웃</label>
+            <input type="date" id="checkout">
+        </div>
+        <div class="input-group">
+            <label>인원</label>
+            <input type="number" value="2" min="1">
+        </div>
+        <button class="btn-reserve" onclick="makeReservation()">예약 가능 여부 확인</button>
+    </div>
+
+    <section class="info-section">
+        <h2>공간의 미학</h2>
+        <div class="info-grid">
+            <div class="info-item">
+                <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=400&q=60" alt="Room">
+                <h3>편안한 침실</h3>
+                <p>최고급 구스 침구류로 깊은 숙면을 보장합니다.</p>
             </div>
-            <div class="room-card">
-                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=500&q=60" alt="객실 2">
-                <div class="room-info">
-                    <h3>패밀리 룸</h3>
-                    <p>넓은 거실과 개별 테라스 바비큐</p>
-                    <p class="price">₩220,000 ~</p>
-                </div>
-            </div>
-            <div class="room-card">
-                <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?auto=format&fit=crop&w=500&q=60" alt="객실 3">
-                <div class="room-info">
-                    <h3>프라이빗 풀빌라</h3>
-                    <p>개별 수영장과 최고급 어메니티</p>
-                    <p class="price">₩450,000 ~</p>
-                </div>
+            <div class="info-item">
+                <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=400&q=60" alt="Pool">
+                <h3>개별 풀빌라</h3>
+                <p>사계절 온수풀에서 프라이빗한 수영을 즐기세요.</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>상호명: 푸른바다 펜션 | 대표: 홍길동 | 주소: 강원도 어느 해변가 123</p>
-        <p>연락처: 010-1234-5678 | 이메일: info@oceanpension.com</p>
-        <p>&copy; 2024 Ocean Pension. All rights reserved.</p>
+        <p>© 2026 별빛 스테이. All rights reserved.</p>
+        <p>배포 테스트용 샘플 페이지입니다.</p>
     </footer>
 
+    <script>
+        // 간단한 상호작용 기능
+        function makeReservation() {
+            const checkin = document.getElementById('checkin').value;
+            const checkout = document.getElementById('checkout').value;
+
+            if(!checkin || !checkout) {
+                alert("날짜를 선택해 주세요!");
+                return;
+            }
+            
+            alert(`${checkin}부터 ${checkout}까지 예약 가능한 객실을 조회합니다! (실제 서버 연결 시 데이터가 전송됩니다)`);
+        }
+
+        // 오늘 날짜로 기본값 설정
+        document.getElementById('checkin').valueAsDate = new Date();
+    </script>
 </body>
 </html>
