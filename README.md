@@ -1,6 +1,6 @@
 # vibe-coding
 
-지금 구조는 React + Next.js(Node 서버) 기반입니다.
+React + Next.js(Node 서버)
 
 프론트: React 컴포넌트 (src/components, app 라우팅)
 서버: Next.js API Route (src/app/api/...)
